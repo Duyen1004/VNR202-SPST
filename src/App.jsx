@@ -200,6 +200,7 @@ export default function App() {
           <div className="min-h-0 flex-1 overflow-hidden">
             <WorldMap
               highestUnlockedStage={highestUnlockedStage}
+              collectedTreasureIds={collectedTreasureIds}
               unlockedStageId={pendingUnlockedStageId}
               onDismissUnlock={() => setPendingUnlockedStageId(null)}
               onSelectStage={(stage) => {

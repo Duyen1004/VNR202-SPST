@@ -1,10 +1,19 @@
 import React, { useEffect, useMemo, useState } from "react";
-import { Lock, LockOpen } from "lucide-react";
+import { Bell, Compass, Flame, Gem, Lock, LockOpen, Scale, Shield } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { lessonStages } from "@/data/gameplay";
-import { stages, worldMapLayout } from "@/data/stages";
+import { stages, stageTreasures, worldMapLayout } from "@/data/stages";
 import { cn, getAssetPath } from "@/lib/utils";
+
+const treasureIcons = {
+  Gem,
+  Compass,
+  Flame,
+  Scale,
+  Shield,
+  Bell
+};
 
 function buildPath(start, end, index) {
   const deltaX = end.x - start.x;
@@ -32,6 +41,7 @@ function buildPath(start, end, index) {
 export function WorldMap({
   onSelectStage,
   highestUnlockedStage = 1,
+  collectedTreasureIds = [],
   unlockedStageId = null,
   onDismissUnlock
 }) {
@@ -89,16 +99,53 @@ export function WorldMap({
   return (
     <Card className="h-full overflow-hidden border-[#cdb893] bg-[linear-gradient(180deg,rgba(248,245,235,0.96),rgba(232,223,203,0.94))] shadow-[0_24px_56px_rgba(96,86,60,0.18)]">
       <CardContent className="flex h-full flex-col gap-3 p-4 lg:gap-4 lg:p-5">
-        <div className="shrink-0 space-y-1.5">
-          <p className="text-xs font-bold uppercase tracking-[0.28em] text-[#7d6440] lg:text-sm">
-            Hành trình mở khóa
-          </p>
-          <h2 className="font-title text-[25px] font-black text-[#5a3f1c] lg:text-[29px]">
-            Bản đồ 6 ải tri thức
-          </h2>
-          <p className="text-sm text-[#7a6648]">
-            Hoàn thành từng ải để mở khóa ải kế tiếp trên hành trình.
-          </p>
+        <div className="shrink-0 flex flex-col gap-3 lg:flex-row lg:items-start lg:justify-between">
+          <div className="space-y-1.5">
+            <p className="text-xs font-bold uppercase tracking-[0.28em] text-[#7d6440] lg:text-sm">
+              Hành trình mở khóa
+            </p>
+            <h2 className="font-title text-[25px] font-black text-[#5a3f1c] lg:text-[29px]">
+              Bản đồ 6 ải tri thức
+            </h2>
+            <p className="text-sm text-[#7a6648]">
+              Hoàn thành từng ải để mở khóa ải kế tiếp trên hành trình.
+            </p>
+          </div>
+
+          <div className="w-full max-w-[420px] rounded-[22px] border border-[#dbc69d] bg-[linear-gradient(180deg,rgba(255,251,241,0.96),rgba(247,236,207,0.95))] p-3 shadow-[0_14px_30px_rgba(92,73,34,0.12)]">
+            <p className="text-[10px] font-extrabold uppercase tracking-[0.22em] text-[#a47b39]">
+              Bảo vật đã thu thập
+            </p>
+
+            <div className="mt-3 grid grid-cols-3 gap-2 sm:grid-cols-6">
+              {stageTreasures.map((treasure) => {
+                const IconComponent = treasureIcons[treasure.icon];
+                const collected = collectedTreasureIds.includes(treasure.id);
+
+                return (
+                  <div
+                    key={treasure.id}
+                    className={cn(
+                      "flex flex-col items-center gap-1 rounded-[16px] border px-2 py-2 text-center transition-all",
+                      collected
+                        ? "border-[#e7cb8e] bg-[#fff8e8] shadow-[0_10px_18px_rgba(183,146,67,0.15)]"
+                        : "border-[#d8cfbf] bg-[#f4efe3] opacity-70"
+                    )}
+                    title={treasure.name}
+                  >
+                    <div
+                      className={cn(
+                        "flex h-8 w-8 items-center justify-center rounded-full text-white",
+                        collected ? `bg-gradient-to-br ${treasure.color}` : "bg-[#b8ad97]"
+                      )}
+                    >
+                      <IconComponent className="h-4 w-4" />
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
         </div>
 
         <div
@@ -142,6 +189,11 @@ export function WorldMap({
               const locked = stage.id > highestUnlockedStage;
               const canOpen = typeof onSelectStage === "function" && !locked;
               const isFreshUnlock = displayedUnlockStageId === stage.id;
+              const collectedTreasure = stageTreasures.find((item) => item.id === stage.treasureId) ?? null;
+              const isTreasureCollected =
+                collectedTreasure != null && collectedTreasureIds.includes(collectedTreasure.id);
+              const TreasureIcon =
+                collectedTreasure != null ? treasureIcons[collectedTreasure.icon] : null;
 
               return (
                 <button
@@ -200,12 +252,20 @@ export function WorldMap({
                         </div>
                       )}
                     </div>
+
+                    {isTreasureCollected && TreasureIcon && collectedTreasure && (
+                      <div className="absolute -bottom-1 left-1/2 z-20 flex -translate-x-1/2 items-center gap-1 rounded-full border border-[#f9e2a0] bg-[linear-gradient(180deg,rgba(255,248,225,0.98),rgba(245,221,146,0.96))] px-2.5 py-1 shadow-[0_10px_22px_rgba(52,38,14,0.32)]">
+                        <div className={cn("flex h-6 w-6 items-center justify-center rounded-full bg-gradient-to-br text-white", collectedTreasure.color)}>
+                          <TreasureIcon className="h-3.5 w-3.5" />
+                        </div>
+                        <span className="max-w-[84px] truncate text-[10px] font-black uppercase tracking-[0.08em] text-[#69491b]">
+                          {collectedTreasure.name}
+                        </span>
+                      </div>
+                    )}
                   </div>
 
-                  <div className="mt-2 space-y-0.5">
-                    <p className="text-[10px] font-bold uppercase tracking-[0.22em] text-[#f8edd5] drop-shadow-[0_1px_2px_rgba(19,28,20,0.45)] lg:text-[11px]">
-                      Ải {stage.id}
-                    </p>
+                  <div className="mt-2">
                     <h3
                       className={cn(
                         "font-title text-[15px] font-bold leading-tight",
