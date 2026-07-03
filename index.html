@@ -21,25 +21,5 @@
   <body>
     <div id="root"></div>
     <script type="module" src="/src/main.jsx"></script>
-    <script>
-      const isGitHubPages = window.location.hostname.endsWith("github.io");
-      const hasBuiltBundle = Array.from(document.scripts).some((scriptTag) => {
-        const src = scriptTag.getAttribute("src") || "";
-        return /assets\/index-.*\.js$/.test(src);
-      });
-
-      if (isGitHubPages && !hasBuiltBundle) {
-        const currentPath = window.location.pathname;
-        const normalizedPath = currentPath.endsWith("/")
-          ? currentPath
-          : `${currentPath}/`;
-
-        if (!normalizedPath.endsWith("/dist/")) {
-          window.location.replace(
-            `${window.location.origin}${normalizedPath}dist/`
-          );
-        }
-      }
-    </script>
   </body>
 </html>
