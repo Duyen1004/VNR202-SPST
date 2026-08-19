@@ -152,7 +152,7 @@ export function WorldMap({
           className="relative min-h-0 flex-1 overflow-hidden rounded-[28px] border border-[#c7b18c] p-4 shadow-[inset_0_1px_0_rgba(255,255,255,0.16),0_24px_54px_rgba(77,87,63,0.24)] lg:p-5"
           style={{
             backgroundImage:
-              `linear-gradient(180deg, rgba(15, 23, 16, 0.22) 0%, rgba(48, 65, 49, 0.12) 34%, rgba(30, 43, 31, 0.24) 100%), url('${getAssetPath("images/world-map-forest-mountain-bg.png")}')`,
+              `linear-gradient(180deg, rgba(7, 28, 17, 0.26) 0%, rgba(45, 78, 45, 0.10) 34%, rgba(11, 31, 19, 0.30) 100%), url('${getAssetPath("images/pac-bo-map-bg.jpg")}')`,
             backgroundSize: "cover",
             backgroundPosition: "center"
           }}
@@ -240,12 +240,12 @@ export function WorldMap({
                         decoding="async"
                         className={cn(
                           "h-full w-full object-cover",
-                          locked ? "brightness-[0.42] saturate-[0.55]" : "brightness-[0.96] saturate-[0.92]"
+                          locked ? "brightness-[0.50] saturate-[0.3] grayscale-[0.4]" : "brightness-[1.0] saturate-[1.1]"
                         )}
                       />
                       <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_50%_18%,rgba(255,247,219,0.16),transparent_34%),linear-gradient(180deg,rgba(11,20,12,0)_42%,rgba(14,19,15,0.22)_100%)]" />
                       {locked && (
-                        <div className="absolute inset-0 flex items-center justify-center bg-[#0f1711]/34">
+                        <div className="absolute inset-0 flex items-center justify-center bg-[#0f1711]/20">
                           <div className="flex h-9 w-9 items-center justify-center rounded-full border border-white/20 bg-[#efe2bd]/90 shadow-lg">
                             <Lock className="h-4 w-4 text-[#6d5328]" />
                           </div>
@@ -316,44 +316,44 @@ export function WorldMap({
           )}
 
           {showUnlockPopup && unlockedStageDetail && (
-            <div className="absolute inset-0 z-20 flex items-center justify-center bg-[#0f120d]/38 p-4 backdrop-blur-sm">
-              <Card className="w-full max-w-[500px] overflow-hidden rounded-[28px] border-[#e5cf9c] bg-[linear-gradient(180deg,rgba(255,252,245,0.98),rgba(247,236,207,0.96))] shadow-[0_26px_70px_rgba(40,30,16,0.26)]">
-                <CardContent className="p-5 lg:p-6">
-                  <div className="relative mb-4 flex justify-center">
+            <div className="absolute inset-0 z-20 flex items-center justify-center overflow-y-auto bg-[#0f120d]/38 p-4 backdrop-blur-sm">
+              <Card className="my-auto w-full max-w-[440px] max-h-full overflow-y-auto rounded-[24px] border-[#e5cf9c] bg-[linear-gradient(180deg,rgba(255,252,245,0.98),rgba(247,236,207,0.96))] shadow-[0_26px_70px_rgba(40,30,16,0.26)]">
+                <CardContent className="p-4 lg:p-5">
+                  <div className="relative mb-2.5 flex justify-center">
                     <div className="absolute inset-x-14 top-1/2 h-px -translate-y-1/2 bg-[linear-gradient(90deg,transparent,rgba(216,183,108,0.75),transparent)]" />
-                    <div className="relative flex h-20 w-20 items-center justify-center rounded-full border border-[#e8c778] bg-[radial-gradient(circle_at_top,#fff6dd,#f4c85b)] shadow-[0_14px_36px_rgba(208,163,54,0.24)]">
-                      <LockOpen className="h-8 w-8 text-[#6e4a16]" />
+                    <div className="relative flex h-14 w-14 items-center justify-center rounded-full border border-[#e8c778] bg-[radial-gradient(circle_at_top,#fff6dd,#f4c85b)] shadow-[0_14px_36px_rgba(208,163,54,0.24)]">
+                      <LockOpen className="h-6 w-6 text-[#6e4a16]" />
                     </div>
                   </div>
 
                   <div className="text-center">
-                    <p className="text-[11px] font-extrabold uppercase tracking-[0.24em] text-[#b1822e]">
+                    <p className="text-[10px] font-extrabold uppercase tracking-[0.24em] text-[#b1822e]">
                       Cánh cổng mới đã sáng
                     </p>
-                    <h3 className="mt-2 font-title text-[31px] font-black leading-tight text-[#4f3718]">
+                    <h3 className="mt-1 font-title text-[22px] font-black leading-tight text-[#4f3718]">
                       {unlockedStageDetail.title}
                     </h3>
-                    <p className="mt-3 text-[14px] leading-6 text-[#755d3f]">
+                    <p className="mt-1.5 text-[13px] leading-5 text-[#755d3f]">
                       Bạn đã mở khóa thành công chặng tiếp theo trên bản đồ. Hãy tiến vào khi đã sẵn sàng.
                     </p>
                   </div>
 
-                  <div className="mt-5 rounded-[22px] border border-[#efdfb9] bg-[#fffaf0] p-3.5">
+                  <div className="mt-3 rounded-[18px] border border-[#efdfb9] bg-[#fffaf0] p-2.5">
                     <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-[#a17b3f]">
                       Điểm đến tiếp theo
                     </p>
-                    <p className="mt-1 font-title text-[18px] font-black text-[#5a3f1c]">
+                    <p className="mt-0.5 font-title text-[16px] font-black text-[#5a3f1c]">
                       {unlockedStageDetail.landmark ?? unlockedStageDetail.title}
                     </p>
-                    <p className="mt-1 text-[12px] leading-5 text-[#7d6440]">
+                    <p className="mt-0.5 text-[11px] leading-4 text-[#7d6440]">
                       Hoàn thành ải hiện tại để tiếp tục chinh phục toàn bộ hành trình tri thức.
                     </p>
                   </div>
 
-                  <div className="mt-5 flex justify-center">
+                  <div className="mt-3.5 flex justify-center">
                     <Button
                       onClick={handleDismissUnlock}
-                      className="h-11 rounded-full bg-[linear-gradient(180deg,#ffe59b,#f2c85c)] px-6 font-title text-[14px] font-black tracking-[0.04em] text-[#553916]"
+                      className="h-10 rounded-full bg-[linear-gradient(180deg,#ffe59b,#f2c85c)] px-6 font-title text-[13px] font-black tracking-[0.04em] text-[#553916]"
                     >
                       Tiếp tục hành trình
                     </Button>

@@ -7,12 +7,12 @@ import { lessonStages, mazeLayouts } from "@/data/gameplay";
 import { cn } from "@/lib/utils";
 
 const STAGE_TREASURES = {
-  1: { name: "Đá Khởi Nguyên", desc: "Bảo vật tượng trưng cho khởi nguồn tri thức triết học", icon: Gem, color: "from-blue-400 to-indigo-600" },
-  2: { name: "Kính Dẫn Đường", desc: "Bảo vật định hướng con đường thoát khỏi hang tối", icon: Compass, color: "from-teal-400 to-emerald-600" },
-  3: { name: "Lư Hương Chuyển Hóa", desc: "Bảo vật cải biến nhận thức biện chứng khoa học", icon: Flame, color: "from-orange-400 to-red-600" },
-  4: { name: "Cán Cân Công Lý", desc: "Bảo vật cân bằng lẽ phải, dân chủ và pháp quyền", icon: Scale, color: "from-amber-400 to-yellow-600" },
-  5: { name: "Ấn Tín Liên Minh", desc: "Bảo vật kết nối đại đoàn kết toàn dân tộc", icon: Shield, color: "from-purple-400 to-pink-600" },
-  6: { name: "Chuông Hòa Hợp", desc: "Bảo vật hòa quyện các giá trị dân tộc, tôn giáo và gia đình", icon: Bell, color: "from-sky-400 to-blue-600" }
+  1: { name: "Ngọn Lửa 1930", desc: "Biểu tượng cho dấu mốc Đảng Cộng sản Việt Nam ra đời", icon: Gem, color: "from-blue-400 to-indigo-600" },
+  2: { name: "Cờ Việt Minh", desc: "Biểu tượng cho sức mạnh đoàn kết giành chính quyền", icon: Compass, color: "from-teal-400 to-emerald-600" },
+  3: { name: "Chiến Công Điện Biên", desc: "Biểu tượng cho ý chí kháng chiến toàn dân", icon: Flame, color: "from-orange-400 to-red-600" },
+  4: { name: "Đường Trường Sơn", desc: "Biểu tượng cho khát vọng thống nhất non sông", icon: Scale, color: "from-amber-400 to-yellow-600" },
+  5: { name: "Dấu Mốc Đổi Mới", desc: "Biểu tượng cho tư duy mới từ thực tiễn đất nước", icon: Shield, color: "from-purple-400 to-pink-600" },
+  6: { name: "Cánh Cửa Hội Nhập", desc: "Biểu tượng cho Việt Nam đổi mới và phát triển", icon: Bell, color: "from-sky-400 to-blue-600" }
 };
 
 function buildPath(start, end, index) {
@@ -94,7 +94,7 @@ export function StageGame({ stageId = 1, onBack, onStageComplete }) {
     }
 
     if (typeof onBack === "function") {
-      onBack();
+      onBack(stage.id);
     }
   }
 

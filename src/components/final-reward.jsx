@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Gem, Compass, Flame, Scale, Shield, Bell, ArrowRight, RotateCcw, Home, Sparkles, Sun, Printer, Award } from "lucide-react";
+import { Gem, Compass, Flame, Scale, Shield, Bell, ArrowRight, RotateCcw, Home, Sun, Printer, Award } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { getAssetPath } from "@/lib/utils";
@@ -7,8 +7,8 @@ import { getAssetPath } from "@/lib/utils";
 const TREASURES = [
   {
     id: 1,
-    name: "Đá Khởi Nguyên",
-    desc: "Khởi nguồn tri thức triết học",
+    name: "Ngọn Lửa 1930",
+    desc: "Dấu mốc Đảng Cộng sản Việt Nam ra đời",
     icon: Gem,
     color: "from-blue-400 to-indigo-600",
     glow: "shadow-[0_0_30px_rgba(99,102,241,0.6)]",
@@ -16,8 +16,8 @@ const TREASURES = [
   },
   {
     id: 2,
-    name: "Kính Dẫn Đường",
-    desc: "Định hướng lối thoát trong hang",
+    name: "Cờ Việt Minh",
+    desc: "Sức mạnh đoàn kết giành chính quyền",
     icon: Compass,
     color: "from-teal-400 to-emerald-600",
     glow: "shadow-[0_0_30px_rgba(20,184,166,0.6)]",
@@ -25,8 +25,8 @@ const TREASURES = [
   },
   {
     id: 3,
-    name: "Lư Hương Chuyển Hóa",
-    desc: "Cải biến nhận thức sâu sắc",
+    name: "Chiến Công Điện Biên",
+    desc: "Ý chí kháng chiến toàn dân",
     icon: Flame,
     color: "from-orange-400 to-red-600",
     glow: "shadow-[0_0_30px_rgba(249,115,22,0.6)]",
@@ -34,8 +34,8 @@ const TREASURES = [
   },
   {
     id: 4,
-    name: "Cán Cân Công Lý",
-    desc: "Cân bằng lẽ phải và chân lý",
+    name: "Đường Trường Sơn",
+    desc: "Khát vọng thống nhất non sông",
     icon: Scale,
     color: "from-amber-400 to-yellow-600",
     glow: "shadow-[0_0_30px_rgba(245,158,11,0.6)]",
@@ -43,8 +43,8 @@ const TREASURES = [
   },
   {
     id: 5,
-    name: "Ấn Tín Liên Minh",
-    desc: "Khối đại đoàn kết bền vững",
+    name: "Dấu Mốc Đổi Mới",
+    desc: "Tư duy mới từ thực tiễn đất nước",
     icon: Shield,
     color: "from-purple-400 to-pink-600",
     glow: "shadow-[0_0_30px_rgba(168,85,247,0.6)]",
@@ -52,8 +52,8 @@ const TREASURES = [
   },
   {
     id: 6,
-    name: "Chuông Hòa Hợp",
-    desc: "Âm thanh hòa quyện đồng điệu",
+    name: "Cánh Cửa Hội Nhập",
+    desc: "Việt Nam đổi mới và phát triển",
     icon: Bell,
     color: "from-sky-400 to-blue-600",
     glow: "shadow-[0_0_30px_rgba(56,189,248,0.6)]",
@@ -149,21 +149,26 @@ export function FinalReward({ earnedTreasureIds = TREASURES.map((item) => item.i
           animation: sun-ray 25s linear infinite;
         }
 
+        .print-only-certificate {
+          display: none;
+        }
+
         /* PRINT STYLING */
         @page {
-          size: A4 landscape;
-          margin: 10mm;
+          size: A4 portrait;
+          margin: 8mm;
         }
 
         @media print {
           html, body {
-            width: 100%;
-            height: 100%;
+            width: 210mm;
+            height: 297mm;
             margin: 0 !important;
             padding: 0 !important;
             background: white !important;
             -webkit-print-color-adjust: exact;
             print-color-adjust: exact;
+            overflow: hidden !important;
           }
           body {
             background: white !important;
@@ -173,25 +178,39 @@ export function FinalReward({ earnedTreasureIds = TREASURES.map((item) => item.i
           body * {
             visibility: hidden;
           }
-          /* Show only the certificate */
-          #print-area, #print-area * {
+          /* Show only the portrait print certificate */
+          #print-area-portrait, #print-area-portrait * {
             visibility: visible;
           }
           #print-area {
-            position: absolute;
-            left: 50%;
-            top: 50%;
-            transform: translate(-50%, -50%);
-            width: 1120px !important;
-            max-width: calc(100vw - 20mm) !important;
-            height: auto !important;
-            aspect-ratio: 865 / 405;
+            display: none !important;
+          }
+          #print-area-portrait {
+            display: flex !important;
+            position: fixed !important;
+            left: 8mm !important;
+            top: 8mm !important;
+            transform: none !important;
+            width: 194mm !important;
+            max-width: none !important;
+            height: 281mm !important;
+            max-height: none !important;
+            min-height: 0 !important;
             box-shadow: none !important;
             border: 6px double #d4af37 !important;
             background: #fffdf5 !important;
             margin: 0 !important;
-            padding: 20px !important;
+            padding: 15mm 13mm !important;
             overflow: hidden !important;
+            border-radius: 10mm !important;
+          }
+          #print-area-portrait .print-seal {
+            height: 34mm !important;
+            width: 46mm !important;
+          }
+          #print-area-portrait .print-seal img {
+            height: 34mm !important;
+            width: 46mm !important;
           }
         }
       `}</style>
@@ -202,7 +221,7 @@ export function FinalReward({ earnedTreasureIds = TREASURES.map((item) => item.i
           {(phase === "gather" || phase === "merging" || phase === "merged") && (
             <div
               className="absolute inset-0 bg-cover bg-center transition-opacity duration-1000 opacity-40 select-none pointer-events-none"
-              style={{ backgroundImage: `url(${getAssetPath("images/cave-stage-bg.png")})` }}
+              style={{ backgroundImage: `url(${getAssetPath("images/hang-pac-bo.jpg")})` }}
             />
           )}
 
@@ -215,7 +234,7 @@ export function FinalReward({ earnedTreasureIds = TREASURES.map((item) => item.i
           {phase === "victory" && (
             <div
               className="absolute inset-0 bg-cover bg-center transition-opacity duration-[2000ms] opacity-80 select-none pointer-events-none"
-              style={{ backgroundImage: `url(${getAssetPath("images/world-map-forest-mountain-bg.png")})` }}
+              style={{ backgroundImage: `url(${getAssetPath("images/pac-bo-map-bg.jpg")})` }}
             />
           )}
 
@@ -238,8 +257,7 @@ export function FinalReward({ earnedTreasureIds = TREASURES.map((item) => item.i
         
         {/* HEADER / NARRATION PANEL */}
         <div className={`max-w-[740px] px-2 text-center ${phase === "victory" ? "space-y-1.5" : "space-y-3"}`}>
-          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full border border-amber-500/30 bg-amber-500/10 text-amber-400 text-xs font-bold tracking-widest animate-pulse">
-            <Sparkles className="h-3 w-3" />
+          <div className="inline-flex items-center px-3 py-1 rounded-full border border-amber-500/30 bg-amber-500/10 text-amber-400 text-xs font-bold tracking-widest animate-pulse">
             <span>PHẦN THƯỞNG ĐẶC BIỆT</span>
           </div>
 
@@ -248,7 +266,7 @@ export function FinalReward({ earnedTreasureIds = TREASURES.map((item) => item.i
           }`}>
             {phase === "gather" && "SÁU BẢO VẬT HỘI TỤ"}
             {phase === "merging" && "HỢP NHẤT BẢO VẬT..."}
-            {phase === "merged" && "NGỌN ĐUỐC CHÂN LÝ"}
+            {phase === "merged" && "ÁNH SÁNG CỦA ĐẢNG"}
             {phase === "revealing" && "ÁNH SÁNG LAN TỎA"}
             {phase === "victory" && (showCertificate ? "CHỨNG NHẬN VINH DANH" : "THẾ GIỚI THỰC LỘ DIỆN")}
           </h1>
@@ -256,11 +274,11 @@ export function FinalReward({ earnedTreasureIds = TREASURES.map((item) => item.i
           <p className={`leading-relaxed text-amber-100/85 ${phase === "victory" ? "text-[13px] md:text-[15px]" : "text-sm md:text-base"}`}>
             {phase === "gather" && "Sáu bảo vật linh thiêng từ sáu ải tri thức đang tỏa sáng rực rỡ, sẵn sàng hợp nhất thành nguồn năng lượng vĩ đại nhất."}
             {phase === "merging" && "Năng lượng từ 6 ải giao thoa, xoáy sâu vào không gian, phá tan màn sương che phủ của những chiếc bóng trong hang."}
-            {phase === "merged" && "Sáu mảnh bảo vật đã quy làm một, thắp lên Ngọn đuốc Chân lý. Hãy để ánh sáng của nó dẫn dắt tâm trí bạn thoát khỏi hang tối."}
+            {phase === "merged" && "Sáu bảo vật đã hợp nhất thành Ánh sáng của Đảng, biểu tượng soi đường cho hành trình tri thức và niềm tin cách mạng."}
             {phase === "revealing" && "Luồng sáng vĩ đại quét qua vách đá, xóa nhòa những cái bóng giả tạo của cuộc đời ảo ảnh..."}
             {phase === "victory" && (
               showCertificate 
-                ? "Chứng nhận ghi nhận hành trình khai phóng tâm thức, thắp sáng con đường tri thức và vượt thoát khỏi hang động Plato."
+                ? "Chứng nhận ghi nhận hành trình tìm hiểu Lịch sử Đảng Cộng sản Việt Nam và vượt thoát khỏi hang Pác Pó."
                 : "Ánh sáng chân lý đã chiếu rọi toàn bộ hang động, biến những ảo ảnh bóng tối thành cát bụi và mở ra trước mắt bạn thế giới thật tươi sáng đầy tự do!"
             )}
           </p>
@@ -330,7 +348,7 @@ export function FinalReward({ earnedTreasureIds = TREASURES.map((item) => item.i
           {/* INNER CENTER CORE */}
           {phase === "gather" && (
             <div className="w-20 h-20 rounded-full bg-gradient-to-tr from-amber-600/20 to-orange-500/20 border border-amber-500/30 flex items-center justify-center animate-pulse">
-              <Sparkles className="h-6 w-6 text-amber-500/70" />
+              <div className="h-3 w-3 rounded-full bg-amber-400/70 shadow-[0_0_22px_rgba(251,191,36,0.72)]" />
             </div>
           )}
 
@@ -338,49 +356,29 @@ export function FinalReward({ earnedTreasureIds = TREASURES.map((item) => item.i
             <div className="w-28 h-28 rounded-full bg-gradient-to-tr from-amber-500 to-orange-600 blur-md animate-ping" />
           )}
 
-          {/* THE TORCH OF TRUTH REVEALED */}
+          {/* PARTY LIGHT EMBLEM REVEALED */}
           {(phase === "merged" || phase === "revealing") && (
             <div className="relative flex flex-col items-center animate-float">
-              {/* Massive Sunburst Ray Behind */}
               <div className="absolute w-[450px] h-[450px] rounded-full bg-[radial-gradient(circle,rgba(245,158,11,0.25)_0%,transparent_70%)] animate-pulse" />
               <div className="absolute w-[400px] h-[400px] rounded-full border border-amber-400/10 animate-sun-ray" 
                 style={{ backgroundImage: "repeating-conic-gradient(from 0deg, transparent 0deg, transparent 15deg, rgba(245,158,11,0.06) 15deg, rgba(245,158,11,0.06) 30deg)" }}
               />
 
-              {/* Torch Body and Fire */}
-              <div className="relative flex flex-col items-center w-40 h-52">
-                {/* Flame Container */}
-                <div className="absolute top-0 flex items-end justify-center w-24 h-24">
-                  {/* Outer Flame Glow */}
-                  <div className="absolute w-20 h-20 rounded-full bg-orange-500/40 blur-xl animate-pulse" />
-                  
-                  {/* Flame Shapes (layered for realism) */}
-                  <div className="w-14 h-20 bg-gradient-to-t from-orange-600 via-amber-400 to-yellow-200 rounded-t-[50%] rounded-b-[40%] origin-bottom animate-fire" />
-                  <div className="absolute w-8 h-12 bg-gradient-to-t from-red-600 via-orange-400 to-yellow-100 rounded-t-[50%] rounded-b-[40%] origin-bottom opacity-80 animate-fire" style={{ animationDelay: "0.05s" }} />
-                  <div className="absolute w-5 h-8 bg-white/90 rounded-t-[50%] rounded-b-[40%] origin-bottom opacity-90 animate-fire" style={{ animationDelay: "0.1s" }} />
-                </div>
-
-                {/* Torch Handle / Vessel */}
-                <div className="absolute bottom-4 flex flex-col items-center">
-                  {/* Metal Bowl */}
-                  <div className="w-20 h-10 bg-gradient-to-b from-[#eedba5] via-[#c99f4d] to-[#996d24] rounded-t-lg rounded-b-3xl border border-amber-300/40 shadow-xl flex items-center justify-center">
-                    {/* Ornaments */}
-                    <div className="w-16 h-1.5 rounded bg-black/30 border-t border-amber-300/30" />
-                  </div>
-                  {/* Grip */}
-                  <div className="w-7 h-24 bg-gradient-to-r from-[#996d24] via-[#5c4114] to-[#996d24] rounded-b-lg border-x border-amber-500/20 shadow-md relative">
-                    {/* Ring Grips */}
-                    <div className="absolute top-4 inset-x-0 h-1 bg-[#2d1f08] border-y border-amber-300/20" />
-                    <div className="absolute top-10 inset-x-0 h-1 bg-[#2d1f08] border-y border-amber-300/20" />
-                    <div className="absolute top-16 inset-x-0 h-1 bg-[#2d1f08] border-y border-amber-300/20" />
-                  </div>
-                </div>
+              <div className="relative flex h-60 w-[360px] max-w-full items-center justify-center">
+                <div className="absolute inset-0 rounded-full bg-[radial-gradient(circle,#fff8d6_0%,#facc15_32%,rgba(239,68,68,0.32)_56%,transparent_72%)] blur-md animate-pulse" />
+                <div className="absolute inset-0 rounded-full border border-amber-200/30 animate-[ping_1.8s_ease-out_infinite]" />
+                <img
+                  src={getAssetPath("images/party-badge.png")}
+                  alt="Huy hiệu Đảng"
+                  className="relative z-10 h-56 w-full object-contain drop-shadow-[0_0_34px_rgba(254,240,138,0.78)]"
+                  loading="eager"
+                  decoding="async"
+                />
               </div>
 
-              {/* Torch Label */}
               <div className="mt-4 px-4 py-1.5 rounded-full border border-amber-400 bg-gradient-to-r from-amber-600/80 to-yellow-600/80 shadow-[0_4px_20px_rgba(245,158,11,0.4)]">
                 <span className="font-title text-sm font-bold tracking-wider text-amber-50 text-shadow-sm">
-                  NGỌN ĐUỐC CHÂN LÝ
+                  ÁNH SÁNG CỦA ĐẢNG
                 </span>
               </div>
             </div>
@@ -392,6 +390,7 @@ export function FinalReward({ earnedTreasureIds = TREASURES.map((item) => item.i
               
               {/* THE CERTIFICATE VIEW */}
               {showCertificate ? (
+                <>
                 <div 
                   id="print-area"
                   className="relative flex h-[405px] w-full max-w-[865px] flex-col justify-between overflow-hidden rounded-3xl border-[6px] double border-amber-600/70 bg-[#fffdf6] px-5 py-4 text-[#5b401e] shadow-2xl"
@@ -413,10 +412,10 @@ export function FinalReward({ earnedTreasureIds = TREASURES.map((item) => item.i
                     <Award className="mx-auto h-5.5 w-5.5 text-amber-600 drop-shadow-sm" />
                     <div className="mx-auto mt-1.5 h-px w-20 bg-gradient-to-r from-transparent via-amber-500/60 to-transparent" />
                     <p className="mt-1.5 text-[8px] font-extrabold tracking-[0.2em] text-amber-700">
-                      CỘNG HÒA TRI THỨC PHIÊN BẢN CỔ ĐẠI
+                      HÀNH TRÌNH LỊCH SỬ ĐẢNG CỘNG SẢN VIỆT NAM
                     </p>
                     <h2 className="mt-1 font-title text-[24px] font-black leading-tight tracking-wide text-amber-900 md:text-[32px]">
-                      CHỨNG NHẬN KHAI PHÓNG TÂM TRÍ
+                      CHỨNG NHẬN HOÀN THÀNH HỌC PHẦN
                     </h2>
                   </div>
 
@@ -429,7 +428,7 @@ export function FinalReward({ earnedTreasureIds = TREASURES.map((item) => item.i
                     </h3>
 
                     <p className="mx-auto max-w-[610px] text-[11px] font-medium leading-6 text-amber-900/90 md:text-[13px]">
-                      Đã kiên trì học hỏi và hoàn thành xuất sắc thử thách <strong>"Hành trình thoát khỏi hang động Plato"</strong>. Vượt qua 6 ải lý luận sâu sắc, thu thập đủ 6 nguồn bảo vật tri thức để thắp sáng <strong>Ngọn đuốc Chân lý</strong>, khai mở tâm thức, bước ra ngoài thế giới hiện thực và tự do.
+                      Đã kiên trì học hỏi và hoàn thành xuất sắc thử thách <strong>"Hành trình thoát khỏi hang Pác Pó"</strong>. Vượt qua 6 chặng lịch sử Đảng Cộng sản Việt Nam, thu thập đủ 6 biểu tượng tri thức để hợp nhất thành <strong>Ánh sáng của Đảng</strong>, củng cố hiểu biết về hành trình cách mạng Việt Nam.
                     </p>
                   </div>
 
@@ -447,23 +446,98 @@ export function FinalReward({ earnedTreasureIds = TREASURES.map((item) => item.i
                       <div className="mt-1.5 h-0.5 w-20 bg-amber-900/20" />
                     </div>
 
-                    {/* Glowing Wax Seal */}
-                    <div className="relative -mt-2 flex h-16 w-16 items-center justify-center rounded-full border-2 border-amber-300 bg-gradient-to-tr from-[#da251d] to-[#ff5d55] shadow-[0_10px_22px_rgba(218,37,29,0.3)]">
-                      <div className="absolute inset-[3px] rounded-full border border-dashed border-white/20" />
-                      <Sun className="h-6 w-6 text-amber-200" />
-                      <span className="absolute -bottom-8 text-[9px] font-bold text-amber-800 tracking-widest whitespace-nowrap">ẤN TÍN CHÂN LÝ</span>
+                    {/* Party emblem seal */}
+                    <div className="print-seal relative -mt-3 flex h-20 w-24 items-center justify-center">
+                      <img
+                        src={getAssetPath("images/party-badge.png")}
+                        alt="Huy hiệu Đảng"
+                        className="h-20 w-24 object-contain drop-shadow-[0_8px_18px_rgba(177,99,20,0.28)]"
+                        loading="eager"
+                        decoding="async"
+                      />
                     </div>
 
                     <div className="w-1/3 text-right">
                       <p className="text-[10px] font-extrabold text-amber-800">NGƯỜI DẪN ĐƯỜNG</p>
                       <p className="mt-1 text-[17px] font-bold italic leading-none tracking-wide text-amber-950 select-none">
-                        Plato
+                        Hang Pác Pó
                       </p>
                       <div className="ml-auto mt-1.5 h-0.5 w-20 bg-amber-900/20" />
                     </div>
                   </div>
 
                 </div>
+                <div
+                  id="print-area-portrait"
+                  className="print-only-certificate relative flex-col justify-between overflow-hidden rounded-[34px] border-[6px] double border-amber-600/70 bg-[#fffdf6] text-[#5b401e]"
+                  style={{
+                    backgroundImage: "radial-gradient(circle at 50% 48%, rgba(254,249,195,0.24) 0%, transparent 68%)",
+                  }}
+                >
+                  <div className="absolute inset-2 rounded-[26px] border border-amber-800/10 pointer-events-none" />
+                  <div className="absolute inset-4 rounded-[20px] border-2 border-amber-600/20 pointer-events-none" />
+
+                  <div className="relative text-center">
+                    <img
+                      src={getAssetPath("images/party-badge.png")}
+                      alt="Huy hiệu Đảng"
+                      className="mx-auto h-24 w-32 object-contain drop-shadow-[0_8px_18px_rgba(177,99,20,0.16)]"
+                      loading="eager"
+                      decoding="async"
+                    />
+                    <div className="mx-auto mt-3 h-px w-32 bg-gradient-to-r from-transparent via-amber-500/70 to-transparent" />
+                    <p className="mt-4 text-[10px] font-extrabold uppercase tracking-[0.22em] text-amber-700">
+                      Hành trình Lịch sử Đảng Cộng sản Việt Nam
+                    </p>
+                    <h2 className="mx-auto mt-5 max-w-[430px] font-title text-[40px] font-black leading-tight tracking-wide text-amber-900">
+                      CHỨNG NHẬN HOÀN THÀNH HỌC PHẦN
+                    </h2>
+                  </div>
+
+                  <div className="relative space-y-5 text-center">
+                    <p className="text-[14px] italic text-amber-700">
+                      Chứng nhận này trân trọng vinh danh học viên:
+                    </p>
+                    <h3 className="mx-auto min-h-[58px] max-w-[390px] rounded-full border border-amber-900/10 border-b border-dashed border-amber-900/25 bg-white/60 px-7 py-3.5 font-title text-[34px] font-black uppercase text-amber-950 shadow-[0_10px_24px_rgba(177,126,45,0.08)]">
+                      {studentName.trim() || "(Vui lòng điền tên của bạn)"}
+                    </h3>
+                    <p className="mx-auto max-w-[430px] text-[16px] font-medium leading-8 text-amber-900/90">
+                      Đã kiên trì học hỏi và hoàn thành xuất sắc thử thách <strong>"Hành trình thoát khỏi hang Pác Pó"</strong>. Vượt qua 6 chặng lịch sử Đảng Cộng sản Việt Nam, thu thập đủ 6 biểu tượng tri thức để hợp nhất thành <strong>Ánh sáng của Đảng</strong>, củng cố hiểu biết về hành trình cách mạng Việt Nam.
+                    </p>
+                    <div className="print-seal mx-auto flex items-center justify-center">
+                      <img
+                        src={getAssetPath("images/party-badge.png")}
+                        alt="Huy hiệu Đảng"
+                        className="object-contain drop-shadow-[0_10px_22px_rgba(177,99,20,0.22)]"
+                        loading="eager"
+                        decoding="async"
+                      />
+                    </div>
+                  </div>
+
+                  <div className="relative flex items-end justify-between gap-8 px-4">
+                    <div className="w-1/2 text-left">
+                      <p className="text-[12px] font-extrabold text-amber-800">NGÀY HOÀN THÀNH</p>
+                      <p className="mt-2 text-[15px] font-bold text-amber-900">
+                        {new Date().toLocaleDateString("vi-VN", {
+                          day: "numeric",
+                          month: "long",
+                          year: "numeric"
+                        })}
+                      </p>
+                      <div className="mt-2 h-0.5 w-28 bg-amber-900/20" />
+                    </div>
+
+                    <div className="w-1/2 text-right">
+                      <p className="text-[12px] font-extrabold text-amber-800">NGƯỜI DẪN ĐƯỜNG</p>
+                      <p className="mt-2 text-[22px] font-bold italic leading-none tracking-wide text-amber-950 select-none">
+                        Hang Pác Pó
+                      </p>
+                      <div className="ml-auto mt-2 h-0.5 w-28 bg-amber-900/20" />
+                    </div>
+                  </div>
+                </div>
+                </>
               ) : (
                 /* MAIN VICTORY EMBLEM AND CARD */
                 <Card className="w-full max-w-[760px] overflow-hidden rounded-[30px] border-[#ecc67e] bg-[linear-gradient(135deg,rgba(255,253,248,0.985)_0%,rgba(252,244,222,0.97)_52%,rgba(247,233,198,0.95)_100%)] text-[#5c411c] shadow-[0_18px_52px_rgba(151,118,43,0.22)]">
@@ -471,7 +545,6 @@ export function FinalReward({ earnedTreasureIds = TREASURES.map((item) => item.i
                     {/* Shiny Emblem */}
                     <div className="relative flex h-13 w-13 items-center justify-center rounded-full border border-[#ebd095] bg-gradient-to-tr from-amber-400 to-yellow-600 shadow-[0_7px_16px_rgba(214,158,46,0.26)]">
                       <Sun className="h-6.5 w-6.5 text-white animate-spin-slow" style={{ animationDuration: "20s" }} />
-                      <Sparkles className="absolute right-1 top-1 h-3.5 w-3.5 text-amber-200 animate-pulse" />
                     </div>
 
                      <div className="mt-3 space-y-1">
@@ -479,17 +552,17 @@ export function FinalReward({ earnedTreasureIds = TREASURES.map((item) => item.i
                         CHÚC MỪNG HỌC VIÊN
                       </p>
                       <h2 className="font-title text-[23px] font-black leading-none text-[#5c4017] md:text-[32px]">
-                        BƯỚC RA KHỎI HANG ĐỘNG
+                      HOÀN THÀNH HÀNH TRÌNH LỊCH SỬ
                       </h2>
                     </div>
 
                     <p className="mt-3 max-w-[520px] text-[13px] font-semibold leading-5 text-[#755c3c] md:text-[14px]">
-                      Bạn đã xuất sắc vượt qua toàn bộ 6 thử thách, thấu hiểu tư tưởng biện chứng khoa học. Ngọn đuốc Chân lý đã giải phóng tâm trí, biến những chiếc bóng ảo ảnh thành tri thức thực thụ để bước vào thế giới thực tại sáng ngời.
+                      Bạn đã xuất sắc vượt qua toàn bộ 6 thử thách, nắm được các chặng lớn trong lịch sử Đảng Cộng sản Việt Nam. Ánh sáng của Đảng đã soi rõ những mốc son cách mạng, giúp hành trình học tập trở nên sinh động và dễ nhớ hơn.
                     </p>
 
                     {/* Custom Name input to generate certificate */}
                     <div className="mt-4 w-full max-w-[455px] rounded-[20px] border border-amber-900/10 bg-amber-900/5 px-3.5 py-2.5 shadow-[0_8px_18px_rgba(151,118,43,0.08)]">
-                      <label className="block text-left text-[13px] font-bold text-amber-800">Nhập tên của bạn để cấp Chứng nhận Khai phóng:</label>
+                      <label className="block text-left text-[13px] font-bold text-amber-800">Nhập tên của bạn để cấp chứng nhận hoàn thành:</label>
                       <div className="mt-2 flex flex-col gap-2 sm:flex-row">
                         <input 
                           type="text" 
@@ -554,8 +627,7 @@ export function FinalReward({ earnedTreasureIds = TREASURES.map((item) => item.i
               onClick={handleRevealWorld}
               className="h-12 min-w-[260px] rounded-full bg-[linear-gradient(180deg,#ffce73,#eb9b2f)] border border-[#df8c22] px-8 font-title text-[15px] font-black uppercase tracking-[0.12em] text-white shadow-[0_20px_42px_rgba(235,145,52,0.4)] hover:brightness-105 transition-all transform hover:scale-[1.03]"
             >
-              Chi chiếu thế giới thật
-              <Sparkles className="ml-2 h-4 w-4" />
+              Chiếu sáng thế giới thật
             </Button>
           )}
 

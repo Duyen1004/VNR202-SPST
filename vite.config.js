@@ -4,7 +4,7 @@ import path from "node:path";
 
 export default defineConfig({
   plugins: [react()],
-  base: "/MLN131-SPST/",
+  base: "/VNR202/",
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "./src")
