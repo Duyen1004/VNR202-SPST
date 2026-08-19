@@ -442,7 +442,13 @@ export function StageGame({ stageId = 1, onBack, onStageComplete }) {
                           isNodeClickable && "hover:scale-[1.06]"
                         )}
                       >
-                        <img src={node.image} alt={node.label} className="h-full w-full object-cover" />
+                        <img
+                          src={node.image}
+                          alt={node.label}
+                          loading="lazy"
+                          decoding="async"
+                          className="h-full w-full object-cover"
+                        />
                         {isCurrent && (
                           <div className="absolute bottom-0 left-1/2 flex h-6 w-6 -translate-x-1/2 translate-y-1/3 items-center justify-center rounded-full bg-[#4576bf] text-[9px] font-black text-white shadow-lg">
                             S
@@ -703,6 +709,8 @@ export function StageGame({ stageId = 1, onBack, onStageComplete }) {
                           <img
                             src={upcomingStage.backgroundImage}
                             alt={upcomingStage.title}
+                            loading="lazy"
+                            decoding="async"
                             className="h-full w-full object-cover"
                           />
                         </div>

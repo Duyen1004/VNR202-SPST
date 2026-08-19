@@ -35,13 +35,7 @@ const features = [
 const criticalAssets = [
   "images/bac-ho-pac-bo.jpg",
   "images/hang-pac-bo.jpg",
-  "images/pac-bo-map-bg.jpg",
-  "images/pac-bo-stage-1.png",
-  "images/pac-bo-stage-2.png",
-  "images/pac-bo-stage-3.png",
-  "images/pac-bo-stage-4.png",
-  "images/pac-bo-stage-5.png",
-  "images/pac-bo-stage-6.png"
+  "images/pac-bo-map-bg.jpg"
 ];
 
 function HomeScreen({ onOpenMap }) {
